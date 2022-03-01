@@ -1,7 +1,7 @@
-import { getJSON } from '../helpers'
+import { getJSON } from "../helpers"
 
 export default class Query {
-  _baseURL = ''
+  _baseURL = ""
 
   constructor(parameters) {
     this.parameters = parameters
@@ -22,13 +22,14 @@ export default class Query {
 
   static async executeMany(queries) {
     try {
-      const data = await Promise.allSettled(
+      const promises = await Promise.allSettled(
         queries.map((query) => query.execute())
       )
-      console.log(data)
-      return data
+      return promises
+        .filter((promise) => promise.status === "fulfilled")
+        .map((promise) => promise.value)
     } catch (err) {
-      throw err
+      console.log(err)
     }
   }
 
@@ -36,8 +37,8 @@ export default class Query {
     return (
       this._baseURL +
       Object.entries(this.parameters)
-        .map((parameter) => parameter.join('='))
-        .join('&')
+        .map((parameter) => parameter.join("="))
+        .join("&")
     )
   }
 

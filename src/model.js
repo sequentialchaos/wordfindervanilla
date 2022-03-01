@@ -1,13 +1,13 @@
-import { getJSONs, isObject } from './helpers'
-import Query from './models/query'
-import DatamuseQuery from './models/datamuseQuery'
-import DictionaryApiQuery from './models/dictionaryApiQuery'
-import Query from './models/query'
+import { getJSONs, isObject } from "./helpers"
+import Query from "./models/query"
+import DatamuseQuery from "./models/datamuseQuery"
+import DictionaryApiQuery from "./models/dictionaryApiQuery"
+import Query from "./models/query"
 
 export const state = {
   current: {},
   search: {
-    query: '',
+    query: "",
     results: [],
   },
   history: [],
@@ -28,6 +28,7 @@ export const getWordData = async function (word) {
 
 export const loadWord = async function (word) {
   const data = await getWordData(word)
+  console.log(data)
   data.forEach((entry) => {
     const { parameters } = entry
     if (isObject(parameters)) {
